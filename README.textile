@@ -22,13 +22,14 @@ Here's the setup method.
 
 Install Userify gem, as well as Haml.
 
+    sudo gem sources -a http://gems.github.com # if you haven't do it already
     sudo gem install haml
-    sudo gem install userify
+    sudo gem install kenn-userify
 
 In config/environment.rb:
 
     config.gem "haml"
-    config.gem "userify"
+    config.gem "kenn-userify", :lib => "userify", :source => "http://gems.github.com"
     DO_NOT_REPLY = "donotreply@example.com"
 
 Run the generator:
@@ -64,11 +65,11 @@ Create app/views/home/index.html.haml:
 
     - if signed_in?
       %p= "Hello #{current_user.name}!"
-
+      
     %h1 Home
-
+    
     %p My app home
-
+    
     - if signed_in?
       %p= link_to 'sign out', signout_url
     - else

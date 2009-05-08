@@ -105,12 +105,10 @@ View templates:
 
     app/views/layouts/application.html.haml
     app/views/layouts/_error_messages.html.haml
-    
     app/views/user/forgot.html.haml
     app/views/user/reset.html.haml
     app/views/user/signin.html.haml
     app/views/user/signup.html.haml
-    
     app/views/userify_mailer/confirmation.html.erb
     app/views/userify_mailer/reset_password.html.erb
 

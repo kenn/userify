@@ -1,0 +1,10 @@
+%h2 Forgot your password?
+
+%p We will email you a link to change your password.
+
+- form_for :forgot, :url => forgot_path do |form|
+  .text_field
+    = form.label :email, "Email address"
+    = form.text_field :email
+  .submit_field
+    = form.submit "Reset password", :disable_with => "Please wait..."

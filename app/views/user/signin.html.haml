@@ -1,0 +1,20 @@
+%h2 Sign in
+
+- form_for :signin, :url => signin_path do |form|
+  .text_field
+    = form.label :email, "Email or username"
+    = form.text_field :email
+  .text_field
+    = form.label :password
+    = form.password_field :password
+  .text_field
+    = form.check_box :remember_me
+    = form.label :remember_me
+  .submit_field
+    = form.submit "Sign in", :disable_with => "Please wait..."
+
+%ul
+  %li
+    = link_to "Sign up", signup_path
+  %li
+    = link_to "Forgot password?", forgot_path

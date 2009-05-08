@@ -1,0 +1,4 @@
+Welcome <%= @user.name %>!
+
+To activate your account, you must click the link below:
+<%= activate_url :token => @user.token %>

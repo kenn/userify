@@ -1,0 +1,4 @@
+#!/bin/sh
+
+sudo gem uninstall userify
+sudo gem install --local userify

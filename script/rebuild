@@ -1,0 +1,6 @@
+#!/bin/sh
+
+rm userify-*.gem
+rm userify.gemspec
+rake gemspec
+gem build userify.gemspec

@@ -1,0 +1,14 @@
+%h2 Sign up
+
+- form_for :signup, :url => signup_path do |form|
+  = form.error_messages
+  .text_field
+    = form.label :username
+    = form.text_field :username
+  .text_field
+    = form.label :email
+    = form.text_field :email
+  .password_field
+    = form.label :password
+    = form.password_field :password
+  = form.submit 'Sign up', :disable_with => 'Please wait...'

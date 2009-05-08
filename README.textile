@@ -65,11 +65,8 @@ Create app/views/home/index.html.haml:
 
     - if signed_in?
       %p= "Hello #{current_user.name}!"
-      
     %h1 Home
-    
     %p My app home
-    
     - if signed_in?
       %p= link_to 'sign out', signout_url
     - else

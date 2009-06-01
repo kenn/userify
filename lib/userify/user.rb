@@ -16,11 +16,14 @@ module Userify
         before_validation :normalize_email
         
         validates_presence_of     :username
+        validates_length_of       :username, :maximum => columns_hash['username'].limit
         validates_uniqueness_of   :username
         validates_presence_of     :email
+        validates_length_of       :email, :maximum => columns_hash['email'].limit
         validates_uniqueness_of   :email, :case_sensitive => false
         validates_format_of       :email, :with => /.+@.+\..+/
         validates_presence_of     :password, :if => :password_required?
+        validates_length_of       :fullname, :maximum => columns_hash['fullname'].limit
         
         before_save :initialize_salt, :encrypt_password, :initialize_token
       end

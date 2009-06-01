@@ -10,7 +10,7 @@ module Userify
       model.send(:include, InstanceMethods)
       
       model.class_eval do
-        attr_accessible :username, :email, :password
+        attr_accessible :username, :email, :password, :fullname
         attr_accessor :password
         
         before_validation :normalize_email
@@ -43,8 +43,8 @@ module Userify
         token_expires_at and Time.now.utc < token_expires_at
       end
       
-      def remember_me!
-        remember_me_until! 6.months.from_now.utc
+      def remember_me!(duration=183)
+        remember_me_until! duration.days.from_now.utc
       end
       
       def forget_me!

@@ -34,6 +34,7 @@ class Userify::UserController < ApplicationController
     case request.method
       
     when :get
+      store_location(true)
       render :template => 'user/signin'
       
     when :post
@@ -116,12 +117,29 @@ class Userify::UserController < ApplicationController
   end
   
 protected
-  def url_after_signup; root_url; end
-  def url_after_signin; root_url; end
-  def url_after_signout; root_url; end
-  def url_after_activate; root_url; end
-  def url_after_forgot; root_url; end
-  def url_after_reset; root_url; end
+  def url_after_signup
+    root_url
+  end
+  
+  def url_after_signin
+    root_url
+  end
+  
+  def url_after_signout
+    return :back
+  end
+  
+  def url_after_activate
+    root_url
+  end
+  
+  def url_after_forgot
+    root_url
+  end
+  
+  def url_after_reset
+    root_url
+  end
   
   def assign_user_from_token
     raise ActionController::Forbidden, "missing token" if params[:token].blank?

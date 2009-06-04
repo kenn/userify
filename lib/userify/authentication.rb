@@ -61,8 +61,8 @@ module Userify
         redirect_to root_url
       end
       
-      def store_location
-        session[:return_to] = request.request_uri if request.get?
+      def store_location(referer=false)
+        session[:return_to] = referer ? request.env["HTTP_REFERER"] : request.request_uri if request.get?
       end
       
       def deny_access(flash_message = nil, opts = {})

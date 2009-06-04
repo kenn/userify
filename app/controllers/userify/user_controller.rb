@@ -1,7 +1,7 @@
 class Userify::UserController < ApplicationController
   unloadable
   
-  before_filter :redirect_to_root, :except => :signout, :if => :signed_in?
+  before_filter :redirect_to_root, :only => [ :signup, :signin, :activate, :forgot, :reset ], :if => :signed_in?
   filter_parameter_logging :password
   
   before_filter :assign_user_from_token,    :only => [ :activate, :reset ]

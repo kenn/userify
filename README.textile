@@ -51,7 +51,7 @@ Create user_controller.rb and home_controller.rb:
 
 Rewrite user_controller.rb as follows:
 
-    class UserController < Userify::UsersController
+    class UserController < Userify::UserController
     end
 
 Edit home_controller.rb:

@@ -39,7 +39,7 @@ module Userify
       end
       
       def encrypt(string)
-        generate_hash("--#{salt}--#{string}--")
+        Digest::SHA1.hexdigest("--#{salt}--#{string}--")
       end
       
       def remember?
@@ -57,12 +57,12 @@ module Userify
       
       def confirm_email!
         self.email_confirmed  = true
-        self.token            = nil
+        clear_token
         save(false)
       end
       
       def forgot_password!
-        generate_token
+        generate_token 24.hours.from_now.utc
         save(false)
       end
       
@@ -74,10 +74,6 @@ module Userify
       
     protected
       
-      def generate_hash(string)
-        Digest::SHA1.hexdigest(string)
-      end
-      
       def generate_random_base62(n=27)
         UID.new(n).to_s
       end
@@ -88,7 +84,7 @@ module Userify
       end
       
       def initialize_salt
-        self.salt = generate_hash("--#{Time.now.utc.to_s}--#{password}--") if new_record?
+        self.salt = generate_random_base62 if new_record?
       end
       
       def encrypt_password
@@ -96,9 +92,9 @@ module Userify
         self.encrypted_password = encrypt(password)
       end
       
-      def generate_token
-        self.token = generate_random_base62
-        self.token_expires_at = nil
+      def generate_token(time=nil)
+        self.token            = generate_random_base62
+        self.token_expires_at = time
       end
       
       def clear_token
@@ -107,7 +103,7 @@ module Userify
       end
       
       def initialize_token
-        generate_token if new_record?
+        generate_token 24.hours.from_now.utc if new_record?
       end
       
       def password_required?
@@ -115,8 +111,8 @@ module Userify
       end
       
       def remember_me_until!(time)
+        self.token            = generate_random_base62
         self.token_expires_at = time
-        self.token = generate_random_base62
         save(false)
       end
     end

@@ -16,7 +16,7 @@ class UserifyCreateUsers < ActiveRecord::Migration
       t.string   :email,              :limit => 60, :null => false
       t.string   :fullname,           :limit => 60
       t.string   :encrypted_password, :limit => 40, :null => false
-      t.string   :salt,               :limit => 40, :null => false
+      t.string   :salt,               :limit => 27, :null => false
       t.string   :token,              :limit => 27
       t.datetime :token_expires_at
       t.boolean  :email_confirmed, :default => false, :null => false

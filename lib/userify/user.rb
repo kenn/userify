@@ -23,7 +23,7 @@ module Userify
         validates_uniqueness_of   :email, :case_sensitive => false
         validates_format_of       :email, :with => /.+@.+\..+/
         validates_presence_of     :password, :if => :password_required?
-        validates_length_of       :fullname, :maximum => columns_hash['fullname'].limit
+        validates_length_of       :fullname, :maximum => columns_hash['fullname'].limit, :allow_nil => true
         
         before_save :initialize_salt, :encrypt_password, :initialize_token
       end
@@ -79,7 +79,7 @@ module Userify
       end
       
       def normalize_email
-        self.email.downcase!
+        self.email.downcase! unless self.email.nil?
         return true
       end
       

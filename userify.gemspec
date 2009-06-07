@@ -1,7 +1,7 @@
 --- !ruby/object:Gem::Specification 
 name: userify
 version: !ruby/object:Gem::Version 
-  version: 0.1.7
+  version: 0.1.8
 platform: ruby
 authors: 
 - Kenn Ejima

@@ -67,7 +67,7 @@ module Userify
       
       def deny_access(flash_message = nil, opts = {})
         store_location
-        flash[:failure] = flash_message if flash_message
+        flash[:error] = flash_message if flash_message
         redirect_to signin_url
       end
     end

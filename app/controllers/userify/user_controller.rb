@@ -34,7 +34,7 @@ class Userify::UserController < ApplicationController
     case request.method
       
     when :get
-      store_location(true)
+      store_location(true) if session[:return_to].blank?
       render :template => 'user/signin'
       
     when :post

@@ -1,4 +1,5 @@
-h1. Userify
+Userify
+=======
 
 Super simple authentication system for Rails, using username, email and password.
 
@@ -6,17 +7,20 @@ Userify focuses on the following 6 conventional actions, and that's all.
 
 ( signup / signin / signout / activate / forgot / reset )
 
-Userify is inspired by "Clearance":http://github.com/thoughtbot/clearance.
+Userify is inspired by **Clearance** <http://github.com/thoughtbot/clearance>.
 
-h2. Limitations
+Limitations
+-----------
 
 Currently, Userify is available only when you create a new project. Don't expect it to work in existing projects.
 
-h2. Requirements
+Requirements
+------------
 
 Userify requires Haml. However, when you override the default template, you don't have to use Haml.
 
-h2. How to use it?
+How to use it?
+--------------
 
 Here's the setup method.
 
@@ -82,13 +86,14 @@ Run migration and start server:
     rake db:migrate
     script/server
 
-Now, go to http://localhost:3000/ and check how everything works.
+Now, go to <http://localhost:3000/> and check how everything works.
 
-h2. Customize
+Customize
+=========
 
 There are a couple of ways to customize Userify:
 
-1. Override methods in the user_controller subclass.
+### 1. Override methods in the user_controller subclass.
 
 You might want to override the following methods in your user_controller subclass.
 
@@ -113,6 +118,6 @@ View templates:
     app/views/userify_mailer/reset_password.html.erb
 
 
-2. Unpack Userify gem into vendor/gems and directly edit source.
+### 2. Unpack Userify gem into vendor/gems and directly edit source.
 
     rake gems:unpack

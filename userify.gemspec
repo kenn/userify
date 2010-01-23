@@ -1,7 +1,7 @@
 --- !ruby/object:Gem::Specification 
 name: userify
 version: !ruby/object:Gem::Version 
-  version: 0.1.9
+  version: 0.2.1
 platform: ruby
 authors: 
 - Kenn Ejima
@@ -9,7 +9,7 @@ autorequire:
 bindir: bin
 cert_chain: []
 
-date: 2009-06-09 00:00:00 -07:00
+date: 2010-01-23 00:00:00 -08:00
 default_executable: 
 dependencies: []
 
@@ -25,7 +25,7 @@ files:
 - CHANGELOG.textile
 - LICENSE
 - Rakefile
-- README.textile
+- README.markdown
 - TODO.textile
 - app/controllers
 - app/controllers/userify
@@ -65,8 +65,10 @@ files:
 - lib/userify/user.rb
 - lib/userify.rb
 - rails/init.rb
-has_rdoc: false
+has_rdoc: true
 homepage: http://github.com/kenn/userify
+licenses: []
+
 post_install_message: 
 rdoc_options: []
 
@@ -87,9 +89,9 @@ required_rubygems_version: !ruby/object:Gem::Requirement
 requirements: []
 
 rubyforge_project: 
-rubygems_version: 1.3.1
+rubygems_version: 1.3.5
 signing_key: 
-specification_version: 2
+specification_version: 3
 summary: Super simple authentication system for Rails, using username, email and password.
 test_files: []
 

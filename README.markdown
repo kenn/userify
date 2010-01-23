@@ -26,15 +26,14 @@ Here's the setup method.
 
 Install Userify gem, as well as Haml.
 
-    sudo gem sources -a http://gems.github.com # if you haven't do it already
     sudo gem install haml
-    sudo gem install kenn-userify
+    sudo gem install userify
 
 In config/environment.rb:
 
     config.gem "haml"
-    config.gem "kenn-userify", :lib => "userify", :source => "http://gems.github.com"
-    DO_NOT_REPLY = "donotreply@example.com"
+    config.gem "userify"
+    UserifyMailer.sender_address = %("Do Not Reply" <donotreply@example.com>)
 
 Run the generator:
 
@@ -42,7 +41,11 @@ Run the generator:
 
 In config/environments/development.rb and test.rb:
 
-    HOST = "localhost:3000"
+    config.action_mailer.default_url_options = { :host => "localhost", :port => 3000 }
+
+In config/environments/production.rb:
+
+    config.action_mailer.default_url_options = { :host => "example.com" }
 
 Define root_url to *something* in your config/routes.rb. Assuming home controller for root:
 
@@ -120,4 +123,4 @@ View templates:
 
 ### 2. Unpack Userify gem into vendor/gems and directly edit source.
 
-    rake gems:unpack
+    rake gems:unpack GEM=userify

@@ -43,10 +43,10 @@ class Userify::UserController < ApplicationController
         flash[:error] = "Bad email or password."
         redirect_to :back
       else
-        if @user.email_confirmed?
+        if @user.is_email_confirmed?
           if params[:signin] and params[:signin][:remember_me] == "1"
             @user.remember_me!
-            cookies[:remember_token] = { :value   => @user.token, :expires => @user.token_expires_at }
+            cookies[:remember_token] = { :value => @user.token, :expires => @user.token_expires_at }
           end
           sign_in(@user)
           flash[:notice] = "Signed in successfully."
@@ -61,7 +61,7 @@ class Userify::UserController < ApplicationController
   end
   
   def signout
-    current_user.forget_me! if current_user
+    current_user.clear_token! if current_user
     cookies.delete :remember_token
     reset_session
     flash[:notice] = "You have been signed out."
@@ -84,7 +84,7 @@ class Userify::UserController < ApplicationController
       
     when :post
       if user = ::User.find_by_email(params[:forgot][:email])
-        user.forgot_password!
+        user.set_token!(24.hours.from_now)
         ::UserifyMailer.deliver_reset_password user
         flash[:notice] = "You will receive an email within the next few minutes. " <<
                          "It contains instructions for changing your password."
@@ -105,7 +105,7 @@ class Userify::UserController < ApplicationController
       
     when :post
       if @user.update_password(params[:user][:password])
-        @user.confirm_email! unless @user.email_confirmed?
+        @user.confirm_email! unless @user.is_email_confirmed?
         sign_in(@user)
         flash[:notice] = "You have successfully reset your password."
         redirect_to url_after_reset
@@ -152,7 +152,7 @@ protected
   end
   
   def forbid_confirmed_user
-    raise ActionController::Forbidden, "confirmed user" if @user and @user.email_confirmed?
+    raise ActionController::Forbidden, "confirmed user" if @user and @user.is_email_confirmed?
   end
   
   def generate_error_messages_for(obj)

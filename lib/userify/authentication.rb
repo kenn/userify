@@ -18,7 +18,7 @@ module Userify
       end
       
       def signed_in?
-        ! current_user.nil?
+        !current_user.nil?
       end
       
     protected
@@ -30,7 +30,7 @@ module Userify
       def user_from_session
         if session[:user_id]
           return nil  unless user = ::User.find_by_id(session[:user_id])
-          return user if user.email_confirmed?
+          return user if user.is_email_confirmed?
         end
       end
       

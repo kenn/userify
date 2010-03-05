@@ -1,8 +1,10 @@
 ActionController::Routing::Routes.draw do |map|
-  map.signup 'user/signup', :controller => 'userify/user', :action => 'signup'
-  map.signin 'user/signin', :controller => 'userify/user', :action => 'signin'
-  map.signout 'user/signout', :controller => 'userify/user', :action => 'signout'
-  map.activate 'user/activate/:token', :controller => 'userify/user', :action => 'activate'
-  map.forgot 'user/forgot', :controller => 'userify/user', :action => 'forgot'
-  map.reset 'user/reset/:token', :controller => 'userify/user', :action => 'reset'
+  map.with_options(:controller => 'userify/user') do |route|
+    route.signup 'signup', :action => 'signup'
+    route.signin 'signin', :action => 'signin'
+    route.signout 'signout', :action => 'signout'
+    route.activate 'user/activate/:token', :action => 'activate'
+    route.forgot 'user/forgot', :action => 'forgot'
+    route.reset 'user/reset/:token', :action => 'reset'
+  end
 end

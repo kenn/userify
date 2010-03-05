@@ -13,8 +13,6 @@ module Userify
         attr_accessible :username, :email, :password, :fullname
         attr_accessor :password
         
-        before_validation :normalize_email
-        
         validates_presence_of     :username
         validates_length_of       :username, :maximum => columns_hash['username'].limit
         validates_uniqueness_of   :username
@@ -25,7 +23,12 @@ module Userify
         validates_presence_of     :password, :if => :password_required?
         validates_length_of       :fullname, :maximum => columns_hash['fullname'].limit, :allow_nil => true
         
-        before_save :initialize_salt, :encrypt_password, :initialize_token
+        before_validation {|record| record.email.downcase! unless self.email.nil? }
+        before_save   {|record| record.encrypted_password = encrypt(password) unless password.blank? }
+        before_create {|record|
+          record.salt = UID.new(27).to_s
+          record.set_token 24.hours.from_now
+        }
       end
     end
     
@@ -43,27 +46,18 @@ module Userify
       end
       
       def remember?
-        token_expires_at and Time.now.utc < token_expires_at
+        is_email_confirmed? and token_expires_at and Time.now < token_expires_at
       end
       
       def remember_me!(duration=183)
-        remember_me_until! duration.days.from_now.utc
-      end
-      
-      def forget_me!
-        clear_token
-        save(false)
+        set_token duration.days.from_now unless remember?
+        save
       end
       
       def confirm_email!
-        self.email_confirmed  = true
+        self.is_email_confirmed  = true
         clear_token
-        save(false)
-      end
-      
-      def forgot_password!
-        generate_token 24.hours.from_now.utc
-        save(false)
+        save
       end
       
       def update_password(new_password)
@@ -72,29 +66,21 @@ module Userify
         save
       end
       
+      def set_token!(expires_at=nil)
+        set_token expires_at
+        save
+      end
+      
+      def clear_token!
+        clear_token
+        save
+      end
+      
     protected
       
-      def generate_random_base62(n=27)
-        UID.new(n).to_s
-      end
-      
-      def normalize_email
-        self.email.downcase! unless self.email.nil?
-        return true
-      end
-      
-      def initialize_salt
-        self.salt = generate_random_base62 if new_record?
-      end
-      
-      def encrypt_password
-        return if password.blank?
-        self.encrypted_password = encrypt(password)
-      end
-      
-      def generate_token(time=nil)
-        self.token            = generate_random_base62
-        self.token_expires_at = time
+      def set_token(expires_at=nil)
+        self.token            = UID.new(27).to_s
+        self.token_expires_at = expires_at
       end
       
       def clear_token
@@ -102,18 +88,8 @@ module Userify
         self.token_expires_at = nil
       end
       
-      def initialize_token
-        generate_token 24.hours.from_now.utc if new_record?
-      end
-      
       def password_required?
         encrypted_password.blank? or !password.blank?
-      end
-      
-      def remember_me_until!(time)
-        self.token            = generate_random_base62
-        self.token_expires_at = time
-        save(false)
       end
     end
     

@@ -19,7 +19,7 @@ class UserifyCreateUsers < ActiveRecord::Migration
       t.string   :salt,               :limit => 27, :null => false
       t.string   :token,              :limit => 27
       t.datetime :token_expires_at
-      t.boolean  :email_confirmed, :default => false, :null => false
+      t.boolean  :is_email_confirmed, :default => false, :null => false
       t.timestamps
     end
     

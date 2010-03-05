@@ -23,12 +23,9 @@ module Userify
         validates_presence_of     :password, :if => :password_required?
         validates_length_of       :fullname, :maximum => columns_hash['fullname'].limit, :allow_nil => true
         
-        before_validation {|record| record.email.downcase! unless self.email.nil? }
-        before_save   {|record| record.encrypted_password = encrypt(password) unless password.blank? }
-        before_create {|record|
-          record.salt = UID.new(27).to_s
-          record.set_token 24.hours.from_now
-        }
+        before_validation :userify_before_validation
+        before_save       :userify_before_save
+        before_create     :userify_before_create
       end
     end
     
@@ -90,6 +87,19 @@ module Userify
       
       def password_required?
         encrypted_password.blank? or !password.blank?
+      end
+      
+      def userify_before_validation
+        self.email.downcase! unless self.email.nil?
+      end
+      
+      def userify_before_save
+        self.encrypted_password = encrypt(password) unless self.password.blank?
+      end
+      
+      def userify_before_create
+        self.salt = UID.new(27).to_s
+        set_token 24.hours.from_now
       end
     end
     

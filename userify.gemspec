@@ -1,7 +1,7 @@
 --- !ruby/object:Gem::Specification 
 name: userify
 version: !ruby/object:Gem::Version 
-  version: 0.2.3
+  version: 0.2.4
 platform: ruby
 authors: 
 - Kenn Ejima
@@ -9,7 +9,7 @@ autorequire:
 bindir: bin
 cert_chain: []
 
-date: 2010-03-04 00:00:00 -08:00
+date: 2010-03-05 00:00:00 -08:00
 default_executable: 
 dependencies: []
 

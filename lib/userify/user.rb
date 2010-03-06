@@ -13,19 +13,17 @@ module Userify
         attr_accessible :username, :email, :password, :fullname
         attr_accessor :password
         
-        validates_presence_of     :username
         validates_length_of       :username, :maximum => columns_hash['username'].limit
-        validates_uniqueness_of   :username
-        validates_presence_of     :email
+        validates_uniqueness_of   :username, :case_sensitive => false
         validates_length_of       :email, :maximum => columns_hash['email'].limit
+        validates_format_of       :email, :with => /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/
         validates_uniqueness_of   :email, :case_sensitive => false
-        validates_format_of       :email, :with => /.+@.+\..+/
         validates_presence_of     :password, :if => :password_required?
         validates_length_of       :fullname, :maximum => columns_hash['fullname'].limit, :allow_nil => true
         
-        before_validation :userify_before_validation
-        before_save       :userify_before_save
-        before_create     :userify_before_create
+        before_validation           :userify_before_validation
+        before_validation_on_create :userify_before_validation_on_create
+        before_save                 :userify_before_save
       end
     end
     
@@ -86,20 +84,20 @@ module Userify
       end
       
       def password_required?
-        encrypted_password.blank? or !password.blank?
+        encrypted_password.blank?
       end
       
       def userify_before_validation
         self.email.downcase! unless self.email.nil?
       end
       
-      def userify_before_save
-        self.encrypted_password = encrypt(password) unless self.password.blank?
-      end
-      
-      def userify_before_create
+      def userify_before_validation_on_create
         self.salt = UID.new(27).to_s
         set_token 24.hours.from_now
+      end
+      
+      def userify_before_save
+        self.encrypted_password = encrypt(password) unless self.password.blank?
       end
     end
     

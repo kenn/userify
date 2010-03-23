@@ -16,9 +16,6 @@ class UserifyGenerator < Rails::Generator::Base
         m.file "user.rb", user_model
       end
       
-      m.directory File.join("lib", "userify")
-      m.file "uid.rb", "lib/userify/uid.rb", :collision => :ask
-      
       m.migration_template "migrations/create_users.rb",
         'db/migrate',
         :migration_file_name => "userify_create_users"

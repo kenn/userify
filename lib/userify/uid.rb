@@ -32,12 +32,16 @@ class UID
   def to_hex
     @value.to_s(16)
   end
+  
+  def self.generate(n=6)
+    [*0..9,*?A..?Z,*?a..?z].sample(n).join
+  end
 end
 
 class String
   BASE62_PRIMITIVES = {}.tap do |h|
     (('0'..'9').to_a + ('A'..'Z').to_a + ('a'..'z').to_a).each_with_index {|e, i| h[e] = i }
-  end
+  end unless defined?(BASE62_PRIMITIVES)
   
   def base62
     i = 0
@@ -53,7 +57,7 @@ end
 
 
 class Integer
-  BASE62_PRIMITIVES = ('0'..'9').to_a + ('A'..'Z').to_a + ('a'..'z').to_a
+  BASE62_PRIMITIVES = ('0'..'9').to_a + ('A'..'Z').to_a + ('a'..'z').to_a unless defined?(BASE62_PRIMITIVES)
   
   def base62
      number = self

@@ -35,7 +35,7 @@ task :default => ['test:all', 'test:features']
 
 gem_spec = Gem::Specification.new do |gem_spec|
   gem_spec.name        = "userify"
-  gem_spec.version     = "0.2.4"
+  gem_spec.version     = "0.2.5"
   gem_spec.summary     = "Super simple authentication system for Rails, using username, email and password."
   gem_spec.email       = "kenn.ejima <at> gmail.com"
   gem_spec.homepage    = "http://github.com/kenn/userify"

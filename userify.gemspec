@@ -1,7 +1,7 @@
 --- !ruby/object:Gem::Specification 
 name: userify
 version: !ruby/object:Gem::Version 
-  version: 0.2.4
+  version: 0.2.5
 platform: ruby
 authors: 
 - Kenn Ejima
@@ -9,7 +9,7 @@ autorequire:
 bindir: bin
 cert_chain: []
 
-date: 2010-03-05 00:00:00 -08:00
+date: 2010-03-22 00:00:00 -07:00
 default_executable: 
 dependencies: []
 
@@ -53,7 +53,6 @@ files:
 - generators/userify/templates/migrations
 - generators/userify/templates/migrations/create_users.rb
 - generators/userify/templates/README
-- generators/userify/templates/uid.rb
 - generators/userify/templates/user.rb
 - generators/userify/USAGE
 - generators/userify/userify_generator.rb
@@ -62,6 +61,7 @@ files:
 - lib/userify/extensions
 - lib/userify/extensions/errors.rb
 - lib/userify/extensions/rescue.rb
+- lib/userify/uid.rb
 - lib/userify/user.rb
 - lib/userify.rb
 - rails/init.rb
